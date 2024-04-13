@@ -11,8 +11,6 @@
 
 # Ottehr
 
-This monorepo contains code for [Ottehr telehealth](https://www.ottehr.com/).
-
 Ottehr is a modern, modular EHR that began as a reference implementation for [ZapEHR](https://zapehr.com). It quickly outgrew "sample EHR" status and became the foundation for large-scale production EHR installations. Ottehr uses ZapEHR for back-end service endpoints, and requires a free ZapEHR account to run as-is, but you are welcome to modify and use a third-party service vendor or build your own service architecture. Ottehr is designed for developers, hopefully making it easy to fork, white-label, and build entire new classes of EHRs and health-tech products with a fraction of the effort of starting from scratch.
 
 ## Setup
