@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Assistant</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="header-content">
+      <div class="logo">
+        <img src="logo.jpg" alt="VedAI Logo">
+        <h1>VedAI</h1>
+      </div>
+      <nav>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="ai_assistant.html">AI Assistant</a></li>
+          <li><a href="prescriber.html">Prescriber</a></li>
+          <li><a href="book.html">Book Appointment</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+      
+<section class="chatbot">
+  <h2>Ask our AI Assistant</h2>
+  <div class="chatbot-container">
+    <div class="chatbot-messages">
+    </div>
+    <div class="chatbot-input">
+      <input type="text" placeholder="Type your message..." />
+      <button>Send</button>
+    </div>
+  </div>
+</section>
+</body>
+<script>
+  const chatbotMessages = document.querySelector('.chatbot-messages');
+  const chatbotInput = document.querySelector('.chatbot-input input');
+  const chatbotSendButton = document.querySelector('.chatbot-input button');
+  
+  function displayMessage(message, isUser) {
+    const messageElement = document.createElement('div');
+    messageElement.classList.add('message');
+    if (isUser) {
+      messageElement.classList.add('user');
+    }
+    messageElement.textContent = message;
+    chatbotMessages.appendChild(messageElement);
+    chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+  }
+
+  function getAIResponse(userMessage) {
+   
+    const aiResponse = `Currently our chatbot is not ready yet we will be shipping this feature soon! Sorry for the inconvenience and if you have any normal symptoms then you can use our prescriber feature.`;
+    return aiResponse;
+  }
+  
+
+  chatbotSendButton.addEventListener('click', () => {
+    const userMessage = chatbotInput.value.trim();
+    if (userMessage) {
+      displayMessage(userMessage, true);
+      chatbotInput.value = '';
+  
+      const aiResponse = getAIResponse(userMessage);
+      displayMessage(aiResponse, false);
+    }
+  });</script>
+</html>

@@ -1,0 +1,15 @@
+Paracetamol: 500mg, 3 times a day for 5 days
+Ibuprofen: 400mg, 2 times a day for 7 days
+Amoxicillin: 500mg, 3 times a day for 10 days
+Cetirizine: 10mg, once a day for 7 days
+Metformin: 500mg, 2 times a day with meals for 30 days
+Atorvastatin: 20mg, once a day in the evening for 90 days
+Lisinopril: 10mg, once a day for 365 days
+Sertraline: 50mg, once a day in the morning for 180 days
+Azithromycin: 500mg, once a day for 3 days
+Naproxen: 250mg, 2 times a day for 14 days
+Fluoxetine: 20mg, once a day in the morning for 90 days
+Simvastatin: 40mg, once a day in the evening for 365 days
+Cephalexin: 500mg, 4 times a day for 7 days
+Hydrochlorothiazide: 25mg, once a day for 365 days
+Prednisone: 10mg, 3 times a day for 7 days

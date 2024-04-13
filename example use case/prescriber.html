@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get Your Prescription</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+          <div class="logo">
+            <img src="logo.jpg" alt="VedAI Logo">
+            <h1>VedAI</h1>
+          </div>
+          <nav>
+            <ul>
+              <li><a href="index.html">Home</a></li>
+              <li><a href="ai_assistant.html">AI Assistant</a></li>
+              <li><a href="prescriber.html">Prescriber</a></li>
+              <li><a href="book.html">Book Appointment</a></li>
+              <li><a href="contact.html">Contact</a></li>
+            </ul>
+          </nav>
+        </div>
+      </header>
+
+<section class="prescriber">
+    <h2>Get a Prescription</h2>
+    <div class="prescriber-container">
+      <form class="prescriber-form">
+        <div class="form-group">
+          <label for="name">Name:</label>
+          <input type="text" id="name" name="name" required>
+        </div>
+        <div class="form-group">
+          <label for="age">Age:</label>
+          <input type="number" id="age" name="age" min="1" max="120" required>
+        </div>
+        <div class="form-group">
+          <label for="gender">Gender:</label>
+          <select id="gender" name="gender" required>
+            <option value="">Select gender</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Symptoms:</label>
+          <div class="symptom-list">
+          </div>
+        </div>
+        <button type="submit">Get Prescription</button>
+      </form>
+      <div class="prescription-result">
+        <h3>Prescription Recommendation:</h3>
+        <p class="prescription-text"></p>
+      </div>
+    </div>
+
+      
+  </section>
+
+
+</body>
+<script>
+const symptoms = [
+  {
+    name: 'Headache',
+    types: [
+      {
+        name: 'Tension Headache',
+        prescription: 'Tulsi (Holy Basil), Ginger, or Clove Oil',
+        childPrescription: 'Ginger',
+        elderlyPrescription: 'Tulsi (Holy Basil) with caution'
+      },
+      {
+        name: 'Migraine',
+        prescription: 'Ajwain (Carom Seeds), Ginger, or Clove Oil',
+        childPrescription: 'Ginger',
+        elderlyPrescription: 'Ajwain (Carom Seeds) with caution'
+      },
+      {
+        name: 'Sinus Headache',
+        prescription: 'Turmeric, Ginger, or Eucalyptus Oil',
+        childPrescription: 'Ginger',
+        elderlyPrescription: 'Turmeric with caution'
+      },
+      {
+        name: 'Cluster Headache',
+        prescription: 'Cold Compress, Peppermint Oil, or Consult a Local Healer',
+        childPrescription: 'Consult a Local Healer',
+        elderlyPrescription: 'Consult a Local Healer'
+      }
+    ],
+    healthTips: [
+      'Stay hydrated and rest in a quiet, dark room',
+      'Practice deep breathing or meditation',
+      'Apply a cold cloth or pack to the forehead or temples',
+      'Avoid strong smells and loud noises'
+    ]
+  },
+  {
+    name: 'Fever',
+    types: [
+      {
+        name: 'Low-grade Fever',
+        prescription: 'Tulsi (Holy Basil), Ginger Tea, or Fenugreek Seeds',
+        childPrescription: 'Tulsi (Holy Basil)',
+        elderlyPrescription: 'Tulsi (Holy Basil) with caution'
+      },
+      {
+        name: 'High-grade Fever',
+        prescription: 'Neem Leaves, Giloy (Tinospora), or Coriander Seeds',
+        childPrescription: 'Giloy (Tinospora)',
+        elderlyPrescription: 'Neem Leaves with caution'
+      }
+    ],
+    healthTips: [
+      'Stay hydrated with warm fluids like herbal teas or soups',
+      'Keep the body covered to induce sweating',
+      'Consume light, easily digestible foods',
+      'Rest and avoid exertion until the fever breaks'
+    ]
+  },
+  {
+    name: 'Cough',
+    types: [
+      {
+        name: 'Dry Cough',
+        prescription: 'Turmeric Milk, Honey, or Ginger Tea',
+        childPrescription: 'Honey (with caution)',
+        elderlyPrescription: 'Turmeric Milk with caution'
+      },
+      {
+        name: 'Productive Cough',
+        prescription: 'Licorice (Mulethi) Tea, Ginger Tea, or Turmeric Milk',
+        childPrescription: 'Ginger Tea (with caution)',
+        elderlyPrescription: 'Licorice (Mulethi) Tea with caution'
+      }
+    ],
+    healthTips: [
+      'Stay hydrated with warm fluids like herbal teas or warm water',
+      'Use a humidifier or inhale steam from hot water with eucalyptus oil',
+      'Avoid exposure to smoke and dust',
+      'Rest and avoid cold or chilled foods'
+    ]
+  },
+  {
+    name: 'Sore Throat',
+    types: [
+      {
+        name: 'Mild Sore Throat',
+        prescription: 'Turmeric Milk, Gargle with Warm Salt Water, or Holy Basil Leaves (Tulsi)',
+        childPrescription: 'Turmeric Milk, Holy Basil Leaves (Tulsi)',
+        elderlyPrescription: 'Gargle with Warm Salt Water, Holy Basil Leaves (Tulsi)'
+      },
+      {
+        name: 'Severe Sore Throat',
+        prescription: 'Licorice (Mulethi) Tea, Slippery Elm Bark Tea, or Gargle with Turmeric Water',
+        childPrescription: 'Slippery Elm Bark Tea',
+        elderlyPrescription: 'Licorice (Mulethi) Tea with caution'
+      }
+    ],
+    healthTips: [
+      'Stay hydrated with warm fluids like herbal teas or warm water with honey',
+      'Gargle with warm salt water multiple times a day',
+      'Keep the throat moist with lozenges or herbal teas',
+      'Rest and avoid speaking loudly or shouting'
+    ]
+  },
+  {
+    name: 'Runny Nose',
+    types: [
+      {
+        name: 'Allergic Rhinitis',
+        prescription: 'Steam Inhalation with Mint Leaves, Local Honey, or Eucalyptus Oil',
+        childPrescription: 'Local Honey (with caution), Eucalyptus Oil (with caution)',
+        elderlyPrescription: 'Steam Inhalation with Mint Leaves, Eucalyptus Oil (with caution)'
+      },
+      {
+        name: 'Viral Rhinitis (Common Cold)',
+        prescription: 'Ginger Tea, Tulsi (Holy Basil) Tea, or Lemon Honey Water',
+        childPrescription: 'Ginger Tea (with caution), Lemon Honey Water',
+        elderlyPrescription: 'Tulsi (Holy Basil) Tea, Lemon Honey Water (with caution)'
+      }
+    ],
+    healthTips: [
+      'Stay hydrated with warm fluids like herbal teas or soups',
+      'Use saline nasal sprays to clear nasal passages',
+      'Avoid exposure to allergens and pollutants',
+      'Rest and keep warm'
+    ]
+  },
+  {
+    name: 'Muscle Aches',
+    types: [
+      {
+        name: 'General Muscle Aches',
+        prescription: 'Turmeric Paste, Mustard Oil Massage, or Epsom Salt Bath',
+        childPrescription: 'Turmeric Paste',
+        elderlyPrescription: 'Mustard Oil Massage with caution'
+      },
+      {
+        name: 'Exercise-induced Muscle Soreness',
+        prescription: 'Rest, Warm Compress, Herbal Oil Massage, or Bath with Neem Leaves',
+        childPrescription: 'Rest, Warm Compress',
+        elderlyPrescription: 'Rest, Warm Compress'
+      }
+    ],
+    healthTips: [
+      'Apply warm compresses or take warm baths with Epsom salts',
+      'Massage affected muscles with warm herbal oils like sesame or mustard oil',
+      'Rest and avoid strenuous activities until the pain subsides',
+      'Stay hydrated and consume foods rich in potassium and magnesium'
+    ]
+  },
+  {
+    name: 'Fatigue',
+    types: [
+      {
+        name: 'Mild Fatigue',
+        prescription: 'Ashwagandha (Withania somnifera) Powder, Dates with Milk, or Jaggery (Gur)',
+        childPrescription: 'Dates with Milk',
+        elderlyPrescription: 'Ashwagandha (Withania somnifera) Powder with caution'
+      },
+      {
+        name: 'Chronic Fatigue',
+        prescription: 'Saffron (Kesar) with Milk, Almonds (Badam), or Consult a Local Healer',
+        childPrescription: 'Almonds (Badam)',
+        elderlyPrescription: 'Saffron (Kesar) with Milk with caution'
+      }
+    ],
+    healthTips: [
+      'Get adequate sleep and rest',
+      'Eat a balanced diet with plenty of fruits, vegetables, and whole grains',
+      'Stay physically active with light exercises like walking or yoga',
+      'Practice stress-relieving techniques like meditation or deep breathing'
+    ]
+  },
+  {
+    name: 'Diarrhea',
+    types: [
+      {
+        name: 'Acute Diarrhea',
+        prescription: 'Banana, Rice, Applesauce, and Toast (BRAT Diet), Herbal Tea with Cumin Seeds, or Fenugreek Seeds Water',
+        childPrescription: 'Banana, Rice, Applesauce, and Toast (BRAT Diet)',
+        elderlyPrescription: 'Herbal Tea with Cumin Seeds, Fenugreek Seeds Water'
+      },
+      {
+        name: 'Chronic Diarrhea',
+        prescription: 'Boiled Rice Water (Kanji), Pomegranate Juice, or Consult a Local Healer',
+        childPrescription: 'Boiled Rice Water (Kanji), Pomegranate Juice',
+        elderlyPrescription: 'Boiled Rice Water (Kanji), Pomegranate Juice'
+      }
+    ],
+    healthTips: [
+      'Drink plenty of fluids to prevent dehydration',
+      'Avoid spicy, oily, and dairy-rich foods',
+      'Practice good hygiene, especially handwashing',
+      'Rest and avoid heavy meals until symptoms improve'
+    ]
+  },
+  {
+    name: 'Nausea',
+    types: [
+      {
+        name: 'Mild Nausea',
+        prescription: 'Ginger Tea, Lemon Water, or Fennel Seeds (Saunf)',
+        childPrescription: 'Ginger Tea, Lemon Water',
+        elderlyPrescription: 'Ginger Tea with caution, Fennel Seeds (Saunf) with caution'
+      },
+      {
+        name: 'Severe Nausea',
+        prescription: 'Raw Ginger, Lemon Balm Tea, or Consult a Local Healer',
+        childPrescription: 'Raw Ginger',
+        elderlyPrescription: 'Lemon Balm Tea with caution'
+      }
+    ],
+    healthTips: [
+      'Sip on clear fluids like water, herbal teas, or diluted fruit juices',
+      'Avoid heavy meals and strong odors',
+      'Rest in a comfortable position with head elevated',
+      'Try acupressure on the wrist or ginger aromatherapy'
+    ]
+  },
+  {
+    name: 'Vomiting',
+    types: [
+      {
+        name: 'Mild Vomiting',
+        prescription: 'Ginger Tea, Lemon Water, or Mint Leaves (Pudina) Infusion',
+        childPrescription: 'Ginger Tea, Lemon Water',
+        elderlyPrescription: 'Ginger Tea with caution, Mint Leaves (Pudina) Infusion'
+      },
+      {
+        name: 'Severe Vomiting',
+        prescription: 'Rice Water (Kanji), Tender Coconut Water, or Consult a Local Healer',
+        childPrescription: 'Rice Water (Kanji), Tender Coconut Water',
+        elderlyPrescription: 'Rice Water (Kanji), Tender Coconut Water'
+      }
+    ],
+    healthTips: [
+      'Take small sips of clear liquids to stay hydrated',
+      'Rest in a comfortable position with head elevated',
+      'Avoid solid foods and heavy meals until vomiting stops',
+      'Gradually reintroduce bland, easily digestible foods'
+    ]
+  }
+];
+
+function generateSymptomOptions() {
+  const symptomList = document.querySelector('.symptom-list');
+  symptoms.forEach(symptom => {
+    const symptomGroup = document.createElement('div');
+    symptomGroup.classList.add('symptom-group');
+
+    const symptomHeader = document.createElement('h3');
+    symptomHeader.textContent = symptom.name;
+    symptomGroup.appendChild(symptomHeader);
+
+    const symptomOptions = document.createElement('div');
+    symptomOptions.classList.add('symptom-options');
+    symptom.types.forEach(type => {
+      const label = document.createElement('label');
+      const checkbox = document.createElement('input');
+      checkbox.type = 'checkbox';
+      checkbox.name = 'symptoms';
+      checkbox.value = `${symptom.name}:${type.name}`;
+      label.appendChild(checkbox);
+      label.appendChild(document.createTextNode(type.name));
+      symptomOptions.appendChild(label);
+    });
+    symptomGroup.appendChild(symptomOptions);
+    symptomList.appendChild(symptomGroup);
+  });
+}
+
+function getPrescriptionRecommendation(name, age, gender, selectedSymptoms) {
+  let prescription = '';
+  const healthTips = [];
+  selectedSymptoms.forEach(symptom => {
+    const [symptomName, symptomType] = symptom.split(':');
+    const symptomData = symptoms.find(s => s.name === symptomName);
+
+    if (symptomData) {
+      const typeData = symptomData.types.find(t => t.name === symptomType);
+
+      if (typeData) {
+        let ageAppropriateRecommendation = typeData.prescription;
+
+        if (age < 12) {
+          ageAppropriateRecommendation = typeData.childPrescription || typeData.prescription;
+        } else if (age >= 65) {
+          ageAppropriateRecommendation = typeData.elderlyPrescription || typeData.prescription;
+        }
+
+        prescription += `${typeData.name}: ${ageAppropriateRecommendation}\n`;
+        healthTips.push(...symptomData.healthTips);
+      }
+    }
+  });
+
+  if (prescription === '') {
+    prescription = 'Consult your doctor for a personalized recommendation.';
+  }
+
+  const healthTipsList = healthTips.map(tip => `- ${tip}`).join('\n'); // Adding a bullet point before each health tip
+  const healthTipsSection = `Health Tips:\n${healthTipsList}`; // Adding a line break before the health tips
+
+  return `Dear ${name}, based on your age (${age}), gender (${gender}), and selected symptoms, the recommended prescription is:\n${prescription}\n\n${healthTipsSection}`; // Adding an extra line break before the health tips section
+}
+
+const prescriptionForm = document.querySelector('.prescriber-form');
+const prescriptionText = document.querySelector('.prescription-text');
+
+prescriptionForm.addEventListener('submit', (event) => {
+  event.preventDefault();
+  const name = document.getElementById('name').value;
+  const age = document.getElementById('age').value;
+  const gender = document.getElementById('gender').value;
+  const selectedSymptoms = Array.from(document.querySelectorAll('input[name="symptoms"]:checked')).map(checkbox => checkbox.value);
+
+  const prescriptionRecommendation = getPrescriptionRecommendation(name, age, gender, selectedSymptoms);
+  prescriptionText.textContent = prescriptionRecommendation;
+});
+
+
+generateSymptomOptions();
+
+</script>
+</html>
